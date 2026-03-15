@@ -3,10 +3,6 @@ import requests
 import os
 import json
 
-# API Configuration
-# Fallback to localhost if not provided in environment
-API_URL = os.getenv("API_URL", "http://localhost:8000")
-
 st.set_page_config(
     page_title="Endee RAG - AI Semantic Search",
     page_icon="🚀",
@@ -53,6 +49,11 @@ st.markdown("""
 # Sidebar
 with st.sidebar:
     st.title("Settings")
+    # API Configuration
+    st.markdown("### Backend Connection")
+    default_api = os.getenv("API_URL", "http://localhost:8000")
+    API_URL = st.text_input("Backend API URL", value=default_api)
+    
     index_name = st.text_input("Index Name", value="my_docs")
     st.divider()
     st.markdown("### About Endee RAG")
