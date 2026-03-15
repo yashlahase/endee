@@ -2,11 +2,10 @@ import streamlit as st
 import requests
 import os
 import json
-from dotenv import load_dotenv
 
-load_dotenv()
-
-API_URL = "http://localhost:8000"
+# API Configuration
+# Fallback to localhost if not provided in environment
+API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 st.set_page_config(
     page_title="Endee RAG - AI Semantic Search",
