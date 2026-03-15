@@ -49,14 +49,17 @@ st.markdown("""
 # Sidebar
 with st.sidebar:
     st.title("Settings")
+    
     # API Configuration
-    st.markdown("### Backend Connection")
-    default_api = os.getenv("API_URL", "http://localhost:8000")
-    API_URL = st.text_input("Backend API URL", value=default_api)
+    st.markdown("### 🔌 Connection Status")
+    
+    # Use the stable Localtunnel URL as default
+    STABLE_URL = "https://endee-rag-yash-demo.loca.lt"
+    API_URL = st.text_input("Backend API URL", value=STABLE_URL, help="Point this to your local backend using Localtunnel.")
     
     index_name = st.text_input("Index Name", value="my_docs")
     st.divider()
-    st.markdown("### About Endee RAG")
+    st.markdown("### 📖 About Endee RAG")
     st.info("This system uses the Endee Vector Database for high-performance retrieval and Google Gemini AI for answering.")
     
     # Health check in sidebar
