@@ -54,7 +54,7 @@ with st.sidebar:
     st.markdown("### 🔌 Connection Status")
     
     # Use the stable Localtunnel URL as default
-    STABLE_URL = "https://endee-rag-yash-demo.loca.lt"
+    STABLE_URL = "https://endee-rag-demo-yash-v2.loca.lt"
     API_URL = st.text_input("Backend API URL", value=STABLE_URL, help="Point this to your local backend using Localtunnel.")
     
     index_name = st.text_input("Index Name", value="my_docs")
@@ -69,8 +69,8 @@ with st.sidebar:
             st.success("Endee Vector DB: Connected")
         else:
             st.error("Endee Vector DB: Disconnected")
-    except:
-        st.error("API Server: Offline")
+    except Exception as e:
+        st.error(f"API Server: Offline ({str(e)})")
 
 # Header
 st.title("🚀 Endee RAG Dashboard")
@@ -93,7 +93,7 @@ with col1:
                         st.success(f"Indexed {uploaded_file.name} successfully!")
                         st.balloons()
                     else:
-                        st.error(f"Error: {response.json().get('detail')}")
+                        st.error(f"Error ({response.status_code}): {response.text}")
                 except Exception as e:
                     st.error(f"Connection failed: {str(e)}")
         else:
@@ -115,11 +115,11 @@ with col2:
                         st.write(data["answer"])
                         
                         with st.expander("View Source Context"):
-                            for i, source in enumerate(data["sources"]):
+                            for i, source in enumerate(data.get("sources", [])):
                                 st.markdown(f"**Source {i+1}** (ID: {source.get('id')})")
                                 st.code(source.get("meta", "No content"), language="text")
                     else:
-                        st.error("Could not find relevant documents or index does not exist.")
+                        st.error(f"Query Error ({response.status_code}): {response.text}")
                 except Exception as e:
                     st.error(f"Error during query: {str(e)}")
         else:
